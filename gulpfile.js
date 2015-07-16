@@ -1,11 +1,15 @@
 var gulp = require('gulp'),
     gutil = require('gulp-util'),
     jade = require('gulp-jade'),
+    plumber = require('gulp-plumber'),
+    uglify = require('gulp-uglify'),
+    concat = require('gulp-concat'),
     livereload = require('gulp-livereload'),
     express = require('express');
 
 var port = 3000,
     paths = {
+        js: 'src/js/*.js',
         jade: ['src/templates/**/*.jade', '!src/templates/partials/**/*.jade'],
         dest: 'build/'
     };
@@ -13,7 +17,8 @@ var port = 3000,
 // Rerun the task when a file changes
 gulp.task('watch', function() {
     livereload.listen();
-    gulp.watch(paths.jade, ['jadeTask']);
+    gulp.watch('src/templates/**/*.jade', ['jadeTask']);
+    gulp.watch(paths.js, ['jsTask']);
 });
 
 gulp.task('jadeTask', function(){
@@ -23,6 +28,15 @@ gulp.task('jadeTask', function(){
         .pipe(livereload());
 });
 
+gulp.task('jsTask', function() {
+  return gulp.src(paths.js)
+    .pipe(plumber())
+    // .pipe(uglify())
+    .pipe(concat('main.js'))
+    .pipe(gulp.dest(paths.dest + 'js/'))
+    .pipe(livereload());
+});
+
 gulp.task('server', function() {
     var app = express();
     app.use(express.static(__dirname + '/build'));
@@ -30,4 +44,4 @@ gulp.task('server', function() {
     app.listen(port);
 });
 
-gulp.task('default', ['jadeTask', 'watch', 'server']);
+gulp.task('default', ['jsTask', 'jadeTask', 'watch', 'server']);
