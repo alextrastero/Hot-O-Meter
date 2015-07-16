@@ -13,14 +13,16 @@ html(lang="en")
         // <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         // [endif]
     body
-        .container
+        .container.text-center
             header
                 h1 Hey...  Ho... Let's Go!
-            section
-                article
+            section.row
+                article.col-md-6.col-md-offset-3
                     .image-container
-                    .button-container
-                        button.js-yes Yes
-                        button.js-no No
+                    .button-container.row
+                        .col-xs-6
+                            button.js-yes.btn.btn-primary.btn-lg Yes
+                        .col-xs-6
+                            button.js-no.btn.btn-primary.btn-lg No
 
         include partials/scripts
