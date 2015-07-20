@@ -15,10 +15,10 @@
 ### Installation
 
 ```sh
-$ git clone [git-repo-url]
-$ cd Hot-O-Meter
-$ npm install && bower install
-$ gulp
+git clone https://github.com/alextrastero/Hot-O-Meter.git
+cd Hot-O-Meter
+npm install && bower install
+gulp
 ```
 
 ##### Open browser and go to localhost:3000
